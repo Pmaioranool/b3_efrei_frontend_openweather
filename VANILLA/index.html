@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="CSS/tablette.css" />
     <link rel="stylesheet" href="CSS/desktop.css" />
     <script type="module" src="JavaScript/script.js" defer></script>
+    <script type="module" src="JavaScript/localStorage.js" defer></script>
   </head>
   <body>
     <!-- HEADER -->
@@ -42,7 +43,9 @@
         <div class="current-temp" id="currentTemp">--°C</div>
         <p>
           <strong id="cityName">Ville</strong>
+          <span></span>
         </p>
+        <button type="button" id="favoriteBtn">Ajouter aux favoris</button>
       </section>
 
       <!-- GRILLE DE DÉTAILS -->
@@ -66,14 +69,6 @@
         <div class="weather-item">
           <h3>Visibilité</h3>
           <p id="visibility">-- km</p>
-        </div>
-      </section>
-
-      <!-- PRÉVISIONS 5 JOURS -->
-      <section class="card">
-        <h2>Prévisions 5 Jours</h2>
-        <div id="forecastContainer">
-          <p>Chargement des prévisions...</p>
         </div>
       </section>
 
