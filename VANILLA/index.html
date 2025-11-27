@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Application météo OpenWeather - Consultez la météo en temps réel"
+    />
+    <title>OpenWeather - Météo en Temps Réel</title>
+    <link rel="stylesheet" href="CSS/style.css" />
+    <link rel="stylesheet" href="CSS/tablette.css" />
+    <link rel="stylesheet" href="CSS/desktop.css" />
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      <h1>OpenWeather</h1>
+      <p>Consultez la météo en temps réel</p>
+    </header>
+
+    <!-- CONTENEUR PRINCIPAL -->
+    <main class="container">
+      <!-- RECHERCHE -->
+      <section class="search-container card">
+        <input
+          type="search"
+          id="searchInput"
+          placeholder="Entrez une ville..."
+          aria-label="Rechercher une ville"
+        />
+        <button id="searchBtn">Rechercher</button>
+        <button id="geoBtn">Ma Localisation</button>
+      </section>
+
+      <!-- MÉTÉO ACTUELLE -->
+      <section class="card" id="currentWeather">
+        <div class="weather-description" id="weatherDesc">Chargement...</div>
+        <div class="current-temp" id="currentTemp">--°C</div>
+        <p>
+          <strong id="cityName">Ville</strong>
+        </p>
+      </section>
+
+      <!-- GRILLE DE DÉTAILS -->
+      <section class="weather-grid" id="weatherGrid">
+        <div class="weather-item">
+          <h3>Ressenti</h3>
+          <p id="feelsLike">--°C</p>
+        </div>
+        <div class="weather-item">
+          <h3>Humidité</h3>
+          <p id="humidity">--%</p>
+        </div>
+        <div class="weather-item">
+          <h3>Pression</h3>
+          <p id="pressure">-- hPa</p>
+        </div>
+        <div class="weather-item">
+          <h3>Vitesse du Vent</h3>
+          <p id="windSpeed">-- m/s</p>
+        </div>
+        <div class="weather-item">
+          <h3>Visibilité</h3>
+          <p id="visibility">-- km</p>
+        </div>
+        <div class="weather-item">
+          <h3>Couverture Nuageuse</h3>
+          <p id="clouds">--%</p>
+        </div>
+      </section>
+
+      <!-- PRÉVISIONS 5 JOURS -->
+      <section class="card">
+        <h2>Prévisions 5 Jours</h2>
+        <div id="forecastContainer">
+          <p>Chargement des prévisions...</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Villes Favorites</h2>
+        <ul id="favoritesList"></ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 OpenWeather App | Données fournies par OpenWeatherMap</p>
+      <p>Projet EFREI - B3 Frontend</p>
+    </footer>
+
+    <script src="JS/app.js" defer></script>
+  </body>
+</html>
