@@ -1,12 +1,4 @@
-function toast(message, type = "info", duration = 3000) {
-  const toastContainer = document.querySelector("#toast");
-  toastContainer.className = `toast ${type} show`;
-  toastContainer.innerText = message;
-  if (duration === "always") return;
-  setTimeout(() => {
-    toastContainer.className = "toast";
-  }, duration);
-}
+import { toast } from "./toast.js";
 
 async function fetchWeatherData(city) {
   try {
@@ -58,7 +50,7 @@ function save(list, item) {
     ? JSON.parse(localStorage.getItem(item))
     : [];
 
-  const ONE_DAY_MS = 24 * 60 * 60 * 1000; // Millisecondes dans un jour
+  const ONE_DAY_MS = 60 * 1000; // Millisecondes dans un jour
 
   if (item === "history") {
     // Vérifier si un élément avec le même nom existe à moins d'un jour
@@ -70,8 +62,8 @@ function save(list, item) {
     if (existsRecent) return;
   } else {
     // Vérifier juste par nom pour les autres listes
-    if (oldList.find((el) => el === list)) {
-      toast(`${list} est déjà dans la liste des favoris !`, "info");
+    if (oldList.find((el) => el.name === list.name)) {
+      toast(`${list.name} est déjà dans la liste des favoris !`, "info");
       return;
     }
   }
@@ -81,7 +73,7 @@ function save(list, item) {
 
   const newList = [list, ...oldList];
   localStorage.setItem(item, JSON.stringify(newList));
-  toast(`${list} ajoutée aux favoris !`, "success");
+  toast(`${list.name} ajoutée aux ${item} !`, "success");
 }
 
 function load(item) {
@@ -107,13 +99,13 @@ function showFavorites() {
     searchButton.innerText = "S";
     searchButton.className = "search-favorite-btn";
     searchButton.addEventListener("click", async () => {
-      const data = await fetchWeatherData(city);
+      const data = await fetchWeatherData(city.name);
       if (data) {
         showData(data);
         save({ date: new Date(), ...data }, "history");
       }
     });
-    li.innerText = city;
+    li.innerText = city.name;
     div.appendChild(searchButton);
     div.appendChild(removeButton);
     li.appendChild(div);
@@ -165,16 +157,17 @@ favoriteBtn.addEventListener("click", () => {
     toast("Aucune ville à ajouter aux favoris.", "warning");
     return;
   }
-  save(cityName, "favorites");
+  save({ name: cityName }, "favorites");
   showFavorites();
 });
 
 const favoritesList = document.getElementById("favoritesList");
 favoritesList.addEventListener("click", (event) => {
   if (event.target.classList.contains("remove-favorite-btn")) {
-    const cityName = event.target.parentElement.firstChild.textContent;
+    const cityName =
+      event.target.parentElement.parentElement.firstChild.textContent;
     let favorites = load("favorites");
-    favorites = favorites.filter((city) => city !== cityName);
+    favorites = favorites.filter((city) => city.name !== cityName);
     localStorage.setItem("favorites", JSON.stringify(favorites));
     toast(`${cityName} supprimée des favoris !`, "info");
     showFavorites();
@@ -191,6 +184,7 @@ geoBtn.addEventListener("click", () => {
     );
     return;
   }
+  toast("Obtention de votre position...", "info");
   navigator.geolocation.getCurrentPosition(async (position) => {
     const { latitude, longitude } = position.coords;
     try {
@@ -212,12 +206,26 @@ geoBtn.addEventListener("click", () => {
 });
 
 // Test initial avec une ville par défaut
-
-fetchWeatherData("Paris").then((data) => {
-  if (data) {
-    showData(data);
-    save({ date: new Date(), ...data }, "history");
+if (window.location.search) {
+  const params = new URLSearchParams(window.location.search);
+  const city = params.get("city");
+  fetchWeatherData(city).then((data) => {
+    if (data) {
+      showData(data);
+      save({ date: new Date(), ...data }, "history");
+    }
+  });
+} else {
+  if (!localStorage.getItem("history")) {
+    fetchWeatherData("Paris").then((data) => {
+      if (data) {
+        showData(data);
+        save({ date: new Date(), ...data }, "history");
+      }
+    });
+  } else {
+    showData(load("history")[0]);
   }
-});
+}
 
 showFavorites();

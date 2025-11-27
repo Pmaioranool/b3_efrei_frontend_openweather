@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Application météo OpenWeather - Consultez la météo en temps réel"
-    />
-    <title>OpenWeather - Météo en Temps Réel</title>
+    <meta name="description" content="Historique des recherches météo" />
+    <title>Historique des Recherches - OpenWeather</title>
     <link rel="stylesheet" href="CSS/style.css" />
     <link rel="stylesheet" href="CSS/tablette.css" />
     <link rel="stylesheet" href="CSS/desktop.css" />
@@ -18,17 +15,31 @@
     <header>
       <h1>OpenWeather</h1>
       <nav>
-        <a href="index.html">Accueil</a> <a href="history.html">Historique</a>
+        <a href="index.html">Accueil</a>
+        <a href="history.html">Historique</a>
       </nav>
-      <p>Consultez la météo en temps réel</p>
+      <p>Historique de vos recherches</p>
     </header>
 
-    <!-- CONTENEUR PRINCIPAL -->
+    <!-- MAIN CONTENT -->
     <main class="container">
       <section class="card">
-        <h2>Historique des Recherches</h2>
-        <ul id="historyList"></ul>
+        <div class="history-header">
+          <h2>Historique des Recherches</h2>
+          <button id="clearHistory" class="clear-btn">
+            Effacer l'historique
+          </button>
+        </div>
+
+        <div class="history-content">
+          <div id="emptyHistory" class="empty-state">
+            <p>Aucune recherche dans l'historique</p>
+          </div>
+          <ul id="historyList" class="history-list"></ul>
+        </div>
       </section>
     </main>
+
+    <div id="toast"></div>
   </body>
 </html>
