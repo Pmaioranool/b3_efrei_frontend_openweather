@@ -50,10 +50,10 @@ function save(list, item) {
     ? JSON.parse(localStorage.getItem(item))
     : [];
 
-  const ONE_DAY_MS = 60 * 1000; // Millisecondes dans un jour
+  const ONE_DAY_MS = 10 * 60 * 1000; // Millisecondes dans un 10 minutes
 
   if (item === "history") {
-    // Vérifier si un élément avec le même nom existe à moins d'un jour
+    // Vérifier si un élément avec le même nom existe à moins de 10 minutes
     const existsRecent = oldList.find(
       (el) =>
         el.name === list.name &&

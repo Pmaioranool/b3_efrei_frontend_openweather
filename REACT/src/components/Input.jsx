@@ -11,8 +11,9 @@ export default function Input({ type, id, placeholder, ariaLabel, onChange }) {
       aria-label={ariaLabel}
       value={value}
       onChange={(e) => {
-        setValue(e.target.value);
-        if (onChange) onChange(e);
+        const val = e.target.value;
+        setValue(val);
+        if (onChange) onChange(val);
       }}
     />
   );

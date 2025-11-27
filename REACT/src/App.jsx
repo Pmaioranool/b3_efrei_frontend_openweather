@@ -9,19 +9,36 @@ function App() {
   return (
     <>
       <Header />
-      {/* <ToastContainer
-        position="bottom-center"
-        autoClose={500}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      /> */}
-      {/* <Toaster /> */}
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          // Style général
+          style: {
+            background: "#1e293b",
+            color: "white",
+            borderRadius: "10px",
+            padding: "12px 16px",
+            border: "1px solid #333",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+          },
+
+          // Succès
+          success: {
+            iconTheme: {
+              primary: "#22c55e", // vert
+              secondary: "#111",
+            },
+          },
+
+          // Erreurs
+          error: {
+            iconTheme: {
+              primary: "#ef4444", // rouge
+              secondary: "#111",
+            },
+          },
+        }}
+      />
       <Routes>
         <Route path="/" element={<Accueil />} />
         <Route path="/history" element={<History />} />
