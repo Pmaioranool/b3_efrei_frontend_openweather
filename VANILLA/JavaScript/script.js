@@ -8,6 +8,33 @@ function toast(message, type = "info", duration = 3000) {
   }, duration);
 }
 
+function fetchWeatherData(city) {
+  try {
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=fr`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Ville non trouvée");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        // Traitez et affichez les données météo ici
+      })
+      .catch((error) => {
+        toast(error.message, "error");
+      });
+  } catch (error) {
+    toast(
+      "Une erreur est survenue lors de la récupération des données.",
+      "error",
+      5000
+    );
+  }
+}
+
 import API_KEY from "../env.js";
 
 if (
@@ -36,5 +63,5 @@ form.addEventListener("submit", (event) => {
     toast("Veuillez entrer le nom d'une ville.", "warning");
     return;
   }
-  console.log(city);
+  const data = fetchWeatherData(city);
 });
