@@ -318,3 +318,18 @@ footer {
 #toast.warning {
   border-left: 5px solid #f59e0b;
 }
+
+nav {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 1rem;
+}
+a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: var(--primary-color);
+}

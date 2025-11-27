@@ -70,7 +70,10 @@ function save(list, item) {
     if (existsRecent) return;
   } else {
     // Vérifier juste par nom pour les autres listes
-    if (oldList.find((el) => el.name === list.name)) return;
+    if (oldList.find((el) => el === list)) {
+      toast(`${list} est déjà dans la liste des favoris !`, "info");
+      return;
+    }
   }
 
   // Limiter à 10 éléments
@@ -78,6 +81,7 @@ function save(list, item) {
 
   const newList = [list, ...oldList];
   localStorage.setItem(item, JSON.stringify(newList));
+  toast(`${list} ajoutée aux favoris !`, "success");
 }
 
 function load(item) {
@@ -92,11 +96,27 @@ function showFavorites() {
   const favorites = load("favorites");
   favorites.forEach((city) => {
     const li = document.createElement("li");
-    const button = document.createElement("button");
-    button.innerText = "×";
-    button.className = "remove-favorite-btn";
+    const div = document.createElement("div");
+
+    // ajout des boutons
+    const removeButton = document.createElement("button");
+    removeButton.innerText = "×";
+    removeButton.className = "remove-favorite-btn";
+
+    const searchButton = document.createElement("button");
+    searchButton.innerText = "S";
+    searchButton.className = "search-favorite-btn";
+    searchButton.addEventListener("click", async () => {
+      const data = await fetchWeatherData(city);
+      if (data) {
+        showData(data);
+        save({ date: new Date(), ...data }, "history");
+      }
+    });
     li.innerText = city;
-    li.appendChild(button);
+    div.appendChild(searchButton);
+    div.appendChild(removeButton);
+    li.appendChild(div);
     favoritesList.appendChild(li);
   });
 }
@@ -133,7 +153,7 @@ form.addEventListener("submit", async (event) => {
   const data = await fetchWeatherData(city);
   if (data) {
     showData(data);
-    save(data, "history");
+    save({ date: new Date(), ...data }, "history");
   }
 });
 
@@ -146,7 +166,6 @@ favoriteBtn.addEventListener("click", () => {
     return;
   }
   save(cityName, "favorites");
-  toast(`${cityName} ajoutée aux favoris !`, "success");
   showFavorites();
 });
 
@@ -185,7 +204,7 @@ geoBtn.addEventListener("click", () => {
       }
       const data = await response.json();
       showData(data);
-      save(data, "history");
+      save({ date: new Date(), ...data }, "history");
     } catch (error) {
       toast(error.message, "error");
     }
@@ -197,6 +216,7 @@ geoBtn.addEventListener("click", () => {
 fetchWeatherData("Paris").then((data) => {
   if (data) {
     showData(data);
+    save({ date: new Date(), ...data }, "history");
   }
 });
 
