@@ -27,6 +27,7 @@ async function fetchWeatherData(city) {
 }
 
 function showData(data) {
+  console.log(data);
   // afficher les données du temps actuel
   const currentWeather = document.getElementById("currentWeather");
   let description = "";
@@ -80,6 +81,27 @@ function save(list, item) {
   localStorage.setItem(item, JSON.stringify(newList));
 }
 
+function load(item) {
+  return localStorage.getItem(item)
+    ? JSON.parse(localStorage.getItem(item))
+    : [];
+}
+
+function showFavorites() {
+  const favoritesList = document.getElementById("favoritesList");
+  favoritesList.innerHTML = "";
+  const favorites = load("favorites");
+  favorites.forEach((city) => {
+    const li = document.createElement("li");
+    const button = document.createElement("button");
+    button.innerText = "×";
+    button.className = "remove-favorite-btn";
+    li.innerText = city;
+    li.appendChild(button);
+    favoritesList.appendChild(li);
+  });
+}
+
 import API_KEY from "../env.js";
 
 // Vérification de la clé API
@@ -129,6 +151,48 @@ favoriteBtn.addEventListener("click", () => {
   showFavorites();
 });
 
+const favoritesList = document.getElementById("favoritesList");
+favoritesList.addEventListener("click", (event) => {
+  if (event.target.classList.contains("remove-favorite-btn")) {
+    const cityName = event.target.parentElement.firstChild.textContent;
+    let favorites = load("favorites");
+    favorites = favorites.filter((city) => city !== cityName);
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    toast(`${cityName} supprimée des favoris !`, "info");
+    showFavorites();
+  }
+});
+
+// geolocalisation
+const geoBtn = document.getElementById("geoBtn");
+geoBtn.addEventListener("click", () => {
+  if (!navigator.geolocation) {
+    toast(
+      "La géolocalisation n'est pas prise en charge par votre navigateur.",
+      "error"
+    );
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(async (position) => {
+    const { latitude, longitude } = position.coords;
+    try {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric&lang=fr`
+      );
+      if (!response.ok) {
+        throw new Error(
+          "Impossible de récupérer les données météo pour votre position."
+        );
+      }
+      const data = await response.json();
+      showData(data);
+      save(data, "history");
+    } catch (error) {
+      toast(error.message, "error");
+    }
+  });
+});
+
 // Test initial avec une ville par défaut
 
 fetchWeatherData("Paris").then((data) => {
@@ -136,3 +200,5 @@ fetchWeatherData("Paris").then((data) => {
     showData(data);
   }
 });
+
+showFavorites();
