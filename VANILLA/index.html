@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="CSS/style.css" />
     <link rel="stylesheet" href="CSS/tablette.css" />
     <link rel="stylesheet" href="CSS/desktop.css" />
+    <script type="module" src="JavaScript/script.js" defer></script>
   </head>
   <body>
     <!-- HEADER -->
@@ -21,17 +22,19 @@
 
     <!-- CONTENEUR PRINCIPAL -->
     <main class="container">
+      <!--toast-->
+      <div id="toast"></div>
       <!-- RECHERCHE -->
-      <section class="search-container card">
+      <form class="search-container card">
         <input
           type="search"
           id="searchInput"
           placeholder="Entrez une ville..."
           aria-label="Rechercher une ville"
         />
-        <button id="searchBtn">Rechercher</button>
-        <button id="geoBtn">Ma Localisation</button>
-      </section>
+        <button type="submit" id="searchBtn">Rechercher</button>
+        <button type="button" id="geoBtn">Ma Localisation</button>
+      </form>
 
       <!-- MÉTÉO ACTUELLE -->
       <section class="card" id="currentWeather">
@@ -88,7 +91,5 @@
       <p>&copy; 2025 OpenWeather App | Données fournies par OpenWeatherMap</p>
       <p>Projet EFREI - B3 Frontend</p>
     </footer>
-
-    <script src="JS/app.js" defer></script>
   </body>
 </html>

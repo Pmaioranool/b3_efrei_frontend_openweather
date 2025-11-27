@@ -26,4 +26,10 @@
   .forecast-item {
     flex: 1 1 calc(20% - 0.8rem);
   }
+
+  #toast {
+    top: 1rem;
+    left: 45%;
+    bottom: auto;
+  }
 }
