@@ -27,7 +27,6 @@ async function fetchWeatherData(city) {
 }
 
 function showData(data) {
-  console.log(data);
   // afficher les données du temps actuel
   const currentWeather = document.getElementById("currentWeather");
   let description = "";
