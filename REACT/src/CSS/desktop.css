@@ -1,0 +1,35 @@
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+
+  header {
+    padding: 2.5rem;
+  }
+
+  .weather-item {
+    flex: 1 1 calc(33.333% - 0.7rem);
+  }
+
+  .card {
+    padding: 2rem;
+  }
+
+  .search-container {
+    gap: 1.5rem;
+  }
+
+  .search-container button {
+    flex: 0.4;
+  }
+
+  .forecast-item {
+    flex: 1 1 calc(20% - 0.8rem);
+  }
+
+  #toast {
+    top: 6rem;
+    left: 45%;
+    bottom: auto;
+  }
+}

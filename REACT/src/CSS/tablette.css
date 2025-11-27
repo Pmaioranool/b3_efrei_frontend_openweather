@@ -1,0 +1,64 @@
+/* === TABLETTE (768px et plus) === */
+@media (min-width: 768px) {
+  .container {
+    max-width: 728px;
+    padding: 0 1.5rem;
+    margin: 0 auto;
+  }
+
+  header {
+    padding: 2rem 1.5rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .search-container {
+    flex-direction: row;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .search-container input {
+    flex: 1;
+    margin-bottom: 0;
+  }
+
+  .search-container button {
+    width: auto;
+    flex: 0.5;
+  }
+
+  .weather-grid {
+    flex-wrap: wrap;
+  }
+
+  .weather-item {
+    flex: 1 1 calc(50% - 0.5rem);
+    min-width: 200px;
+  }
+
+  button {
+    width: auto;
+    padding: 0.75rem 2rem;
+  }
+
+  .current-temp {
+    font-size: 4rem;
+  }
+
+  .forecast-item {
+    flex: 1 1 calc(50% - 0.5rem);
+  }
+
+  #toast {
+    top: 10%;
+    left: 30%;
+    bottom: auto;
+  }
+}
